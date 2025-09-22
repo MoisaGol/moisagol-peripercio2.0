@@ -1,0 +1,167 @@
+import os
+from zipfile import ZipFile
+
+project_dir = "projeto_moisagol"
+img_dir = os.path.join(project_dir, "imagens")
+os.makedirs(img_dir, exist_ok=True)
+
+# HTML
+index_html = """<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>moisagolperipericias2.0</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="autor">
+      <img src="imagens/avatar_loiro_anime.png" alt="Avatar de Moisés" />
+      <span>Moisés Silva</span>
+    </div>
+    <h1 class="nome-site">moisagolperipericias2.0</h1>
+  </header>
+
+  <main>
+    <section class="apresentacao">
+      <h2>Bem-vindo ao moisagolperipericias2.0</h2>
+      <p>
+        Este site foi criado para apresentar as últimas tendências em <strong>tecnologia mobile</strong>, com foco em <strong>celulares modernos</strong>, <strong>inovações de design</strong> e <strong>tecnologia de ponta</strong>.
+      </p>
+    </section>
+
+    <section class="galeria">
+      <h2>Galeria de Celulares</h2>
+      <div class="grid">
+        <img src="imagens/celular_ia1.jpg" alt="Celular moderno 1" />
+        <img src="imagens/celular_ia2.jpg" alt="Celular moderno 2" />
+        <img src="imagens/celular_ia3.jpg" alt="Celular moderno 3" />
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 moisagolperipericias2.0 — Site criado por Moisés Silva com HTML5 e CSS3.</p>
+  </footer>
+</body>
+</html>
+"""
+
+# CSS
+style_css = """* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #6C63FF, #FC00FF, #00DBDE);
+  background-size: 400% 400%;
+  animation: gradientBg 15s ease infinite;
+  color: #fff;
+  min-height: 100vh;
+}
+
+@keyframes gradientBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.autor {
+  display: flex;
+  align-items: center;
+}
+
+.autor img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+
+.autor span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nome-site {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+}
+
+main {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.apresentacao p {
+  max-width: 800px;
+  margin: 20px auto;
+  font-size: 18px;
+}
+
+.galeria {
+  margin-top: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.grid img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.grid img:hover {
+  transform: scale(1.05);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  margin-top: 40px;
+}
+"""
+
+# Escrevendo arquivos
+with open(os.path.join(project_dir, "index.html"), "w", encoding="utf-8") as f:
+    f.write(index_html)
+
+with open(os.path.join(project_dir, "style.css"), "w", encoding="utf-8") as f:
+    f.write(style_css)
+
+# Criando imagens de exemplo (em branco)
+for img in ["avatar_loiro_anime.png", "celular_ia1.jpg", "celular_ia2.jpg", "celular_ia3.jpg"]:
+    with open(os.path.join(img_dir, img), "wb") as f:
+        f.write(b"")
+
+# Compactar em ZIP
+with ZipFile("projeto_moisagol.zip", "w") as zipf:
+    zipf.write(os.path.join(project_dir, "index.html"), arcname="projeto_moisagol/index.html")
+    zipf.write(os.path.join(project_dir, "style.css"), arcname="projeto_moisagol/style.css")
+    for img in os.listdir(img_dir):
+        zipf.write(os.path.join(img_dir, img), arcname=f"projeto_moisagol/imagens/{img}")
